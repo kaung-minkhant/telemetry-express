@@ -4,6 +4,7 @@
       "es6"
     ],
     "alwaysStrict": true,
+    "esModuleInterop": true,
     "strictNullChecks": true,
     "noImplicitAny": true
   },
