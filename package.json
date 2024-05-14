@@ -4,17 +4,22 @@
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build:commonjs": "rimraf lib && tsc --target es5 --outDir lib --module commonjs --declaration",
     "build:es": "rimraf es && tsc --target es6 --outDir es --module es6",
     "build": "npm run build:commonjs && npm run build:es",
     "ts": "ts-node src/",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "start": "ts-node --require ./src/instrumentation.ts ./src/app.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@opentelemetry/api": "^1.8.0",
+    "@opentelemetry/auto-instrumentations-node": "^0.46.0",
+    "@opentelemetry/sdk-metrics": "^1.24.1",
+    "@opentelemetry/sdk-node": "^0.51.1",
+    "@opentelemetry/sdk-trace-node": "^1.24.1",
     "express": "^4.19.2"
   },
   "devDependencies": {
