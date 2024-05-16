@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - 9411:9411
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    command:
+      - '--enable-feature=otlp-write-receive'
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus/prometheus.yml:/prometheus/prometheus.yml
+  collector:
+    image: otel/opentelemetry-collector
+    container_name: otel_collector
+    ports:
+      - 4317:4317
+      - 4318:4318
+    volumes:
+      - ./collector/collector-config.yaml:/etc/otelcol/config.yaml

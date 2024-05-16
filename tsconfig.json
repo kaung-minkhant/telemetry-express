@@ -5,7 +5,8 @@
     ],
     "alwaysStrict": true,
     "strictNullChecks": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "esModuleInterop": true
   },
   "files": [
     "src/index.ts"
