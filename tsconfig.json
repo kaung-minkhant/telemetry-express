@@ -5,6 +5,7 @@
     ],
     "alwaysStrict": true,
     "strictNullChecks": true,
+    "esModuleInterop": true,
     "noImplicitAny": true
   },
   "files": [
