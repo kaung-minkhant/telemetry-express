@@ -14,6 +14,7 @@ import {
   SEMRESATTRS_SERVICE_NAME,
   SEMRESATTRS_SERVICE_VERSION,
 } from '@opentelemetry/semantic-conventions';
+import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 
 
 const resource = Resource.default().merge(
@@ -44,9 +45,14 @@ const myServiceMeterProvider = new MeterProvider({
 
 opentelemetry.metrics.setGlobalMeterProvider(myServiceMeterProvider)
 
+const traceExporter = new OTLPTraceExporter({
+  url: 'http://localhost:4318/v1/traces',
+})
+console.log(traceExporter.url)
+
 const sdk = new NodeSDK({
   resource: resource,
-  traceExporter: new ConsoleSpanExporter(),
+  traceExporter: traceExporter,
   // metricReader: new PeriodicExportingMetricReader({
   //   exporter: new ConsoleMetricExporter(),
   // }),

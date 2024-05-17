@@ -14,17 +14,17 @@ const meter = metrics.getMeter('dice-lib')
 
 function rollOnce(i: number, min: number, max: number) {
   // counter.add(1)
-  return tracer.startActiveSpan(`rollOnce:${i}`, (span: Span) => {
+  // return tracer.startActiveSpan(`rollOnce:${i}`, (span: Span) => {
     const result = Math.floor(Math.random() * (max - min) + min);
-    span.setAttribute("dicelib.rolled", result);
-    span.end();
+    // span.setAttribute("dicelib.rolled", result);
+    // span.end();
     return result;
-  });
+  // });
 }
 
 export function rollTheDice(rolls: number, min: number, max: number) {
   return tracer.startActiveSpan(
-    "rollTHeDice",
+    "rollTheDice",
     { attributes: { rolls: rolls } },
     (span: Span) => {
       span.setAttribute(SEMATTRS_CODE_FUNCTION, "rollTheDice");
@@ -33,15 +33,6 @@ export function rollTheDice(rolls: number, min: number, max: number) {
       const result: number[] = [];
       for (let i = 0; i < rolls; i++) {
         result.push(rollOnce(i, min, max));
-      }
-      try {
-        throw new Error("Something happened");
-      } catch (error) {
-        span.recordException(error)
-        span.setStatus({
-          code: SpanStatusCode.ERROR,
-          message: "something went wrong",
-        });
       }
       span.end();
       return result;
