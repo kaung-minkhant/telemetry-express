@@ -1,0 +1,14 @@
+version: '3'
+services:
+  collector-gateway:
+    image: otel/opentelemetry-collector:0.29.0
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./config/collector-gateway-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "1888:1888"   # pprof extension
+      - "8888:8888"   # prometheus metrics exposed by the collector
+      - "8889:8889"   # prometheus exporter metrics
+      - "13133:13133" # health_check extension
+      - "4318:4318"   # OTLP HTTP receiver
+      - "55670:55670" # zpages extension
